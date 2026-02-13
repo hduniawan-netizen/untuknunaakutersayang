@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Nunaa aku Tersayang 💝</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1 class="title">Untuk Nunaa aku Tersayang 💝</h1>
+            <p class="subtitle">Tekan tombol di bawah untuk memulai</p>
+            
+            <div class="buttons-group">
+                <button class="btn btn-primary" id="heartBtn">💗 Jatuhkan Cinta</button>
+                <button class="btn btn-secondary" id="soundBtn">🔊 Sound ON</button>
+                <button class="btn btn-tertiary" id="resetBtn">🔄 Reset</button>
+            </div>
+
+            <div class="message-box">
+                <p id="messageText">Klik tombol untuk melihat keajaiban ✨</p>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <audio id="heartSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAAA=" type="audio/wav">
+    </audio>
+
+    <audio id="clickSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAAA=" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
