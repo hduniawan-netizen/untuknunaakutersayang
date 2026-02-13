@@ -1,83 +1,94 @@
-// script.js
+class HeartParticle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 5 + 5;
+        this.alpha = 1;
+        this.gravity = 0.1;
+        this.velocityY = Math.random() * -2 - 1;
+    }
 
-// Love Particle Effect
+    update() {
+        this.y += this.velocityY;
+        this.velocityY += this.gravity;
+        this.alpha -= 0.02;
+        if (this.alpha < 0) this.alpha = 0;
+    }
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-function Particle(x, y) {
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 5 + 1;
-    this.speedY = Math.random() * 3 + 1;
-    this.color = 'rgba(255, 0, 0, 0.8)';
-}
-
-Particle.prototype.update = function() {
-    this.y += this.speedY;
-};
-
-Particle.prototype.draw = function() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-};
-
-function createParticles(e) {
-    const xPos = e.x;
-    const yPos = e.y;
-    for (let i = 0; i < 10; i++) {
-        particles.push(new Particle(xPos, yPos));
+    render(ctx) {
+        ctx.fillStyle = `rgba(255, 0, 0, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
     }
 }
 
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let heartSound, successSound;
+let soundEnabled = true;
+
+function loadSounds() {
+    heartSound = new Audio('path/to/heart-sound.mp3');
+    successSound = new Audio('path/to/success-sound.mp3');
+}
+
+function playSound(sound) {
+    if (soundEnabled) {
+        sound.currentTime = 0;
+        sound.play();
+    }
+}
+
+function setupButtonHandlers() {
+    const yesButton = document.getElementById('yes-button');
+    const noButton = document.getElementById('no-button');
+
+    yesButton.addEventListener('click', () => {
+        playSound(successSound);
+        // Additional visual effects for 'Yes' button
+    });
+
+    noButton.addEventListener('click', () => {
+        playSound(heartSound);
+        // Additional visual effects for 'No' button
+    });
+}
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    // Update sound toggle visual
+}
+
+function createHeartParticle(x, y) {
+    const heartParticle = new HeartParticle(x, y);
+    heartParticles.push(heartParticle);
+}
+
+function handlePointerEvent(event) {
+    const x = event.clientX;
+    const y = event.clientY;
+    createHeartParticle(x, y);
+}
+
+function handleResize() {
+    // Handle window resize
+}
+
+const heartParticles = [];
 function animate() {
+    requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((particle, index) => {
+    heartParticles.forEach((particle, index) => {
         particle.update();
-        particle.draw();
-        if (particle.y > canvas.height) {
-            particles.splice(index, 1);
+        particle.render(ctx);
+        if (particle.alpha <= 0) {
+            heartParticles.splice(index, 1);
         }
     });
-    requestAnimationFrame(animate);
 }
 
-canvas.addEventListener('click', createParticles);
+window.addEventListener('click', handlePointerEvent);
+window.addEventListener('touchstart', handlePointerEvent);
+window.addEventListener('resize', handleResize);
+loadSounds();
 animate();
-
-// Button Click Handlers
-function onClick() {
-    // Interactive animations on "Jatuhkan Cinta" button click
-    createParticles(event);
-    playSound();
-}
-
-// Sound Effect Functions
-const audio = new Audio('sound_effect.mp3');
-function playSound() {
-    audio.play();
-}
-
-// Sound Toggle Functionality
-let soundOn = true;
-function toggleSound() {
-    soundOn = !soundOn;
-    soundOn ? audio.play() : audio.pause();
-}
-
-// Reset Functionality
-function reset() {
-    particles = [];
-}
-
-document.getElementById('jatuhkanCinta').addEventListener('click', onClick);
-
-document.getElementById('toggleSound').addEventListener('click', toggleSound);
-
-document.getElementById('resetButton').addEventListener('click', reset);
