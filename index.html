@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Una mau ga bareng bareng terus sama Ringgas</title>
+    <title>Una mau ga bareng bareng terus sama Ringgas 💝</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Una mau ga bareng bareng terus sama Ringgas</h1>
+    <canvas id="canvas"></canvas>
+    
+    <div class="container">
+        <div class="content">
+            <h1 class="title">💝 Una mau ga bareng bareng terus sama Ringgas? 💝</h1>
+            
+            <div class="heart-animation">
+                <div class="heart"></div>
+            </div>
+            
+            <div class="buttons-group">
+                <button class="btn btn-yes" id="yesBtn">Ya, Tentu Saja! ❤️</button>
+                <button class="btn btn-no" id="noBtn">Tidak 😢</button>
+            </div>
+
+            <div class="message-box">
+                <p id="messageText">Pilih jawaban kamu! 👇</p>
+            </div>
+
+            <div class="sound-control">
+                <button class="btn-sound" id="soundBtn" title="Toggle Sound">🔊</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="sounds.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
